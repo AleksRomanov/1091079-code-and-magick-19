@@ -50,35 +50,42 @@ var makeYourselfFirst = function (arr) {
 var renderWinTitle = function (ctx) {
   ctx.fillStyle = '#000';
   ctx.font = 'bold 16px PT Mono';
-  var title = 'Ура вы победили!\nСписок результатов:';
-  var TitleArrow = title.split('\n');
+  var titles = 'Ура вы победили!\nСписок результатов:';
+  var TitleArrow = titles.split('\n');
 
   TitleArrow.forEach(function (partTitle, i) {
     ctx.fillText(partTitle, CLOUD_COORDINATES[0] + 20, CLOUD_COORDINATES[1] + 30 + (GAP * 2) * i);
   });
 };
 
+
+var renderNamesText = function (ctx, i, name) {
+  ctx.fillStyle = '#000';
+  ctx.font = 'bold 16px PT Mono';
+  ctx.textBaseline = 'hanging';
+  ctx.fillText(name, CLOUD_COORDINATES[0] + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, CLOUD_HEIGHT - FONT_GAP);
+};
+
+var renderTimeText = function (ctx, i, times, maxTime) {
+  ctx.fillStyle = '#000';
+  ctx.font = 'bold 16px PT Mono';
+  ctx.fillText(times[i], CLOUD_COORDINATES[0] + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, SPACES_HEIGHTS - FONT_GAP + (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime));
+};
+
 /* Отрисовка диаграммы результатов */
 
-var renderGraphic = function (ctx, names, times) {
+var renderGraphicAndText = function (ctx, names, times) {
   var maxTime = sortTimeByIncreasing(times);
   names.forEach(function (name, i) {
-    ctx.fillStyle = '#000';
-    ctx.font = 'bold 16px PT Mono';
-    ctx.textBaseline = 'hanging';
-    ctx.fillText(name, CLOUD_COORDINATES[0] + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, CLOUD_HEIGHT - FONT_GAP);
+    renderNamesText(ctx, i, name);
     if (name === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       var random = '' + (1 - Math.random());
       ctx.fillStyle = 'hsla(230, 86%, 48%,' + random + ')';
     }
-
     ctx.fillRect(CLOUD_COORDINATES[0] + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, SPACES_HEIGHTS + (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime), BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
-
-    ctx.fillStyle = '#000';
-    ctx.font = 'bold 16px PT Mono';
-    ctx.fillText(times[i], CLOUD_COORDINATES[0] + BAR_GAP + (BAR_WIDTH + BAR_GAP) * i, SPACES_HEIGHTS - FONT_GAP + (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime));
+    renderTimeText(ctx, i, times, maxTime);
   });
 };
 
@@ -91,5 +98,5 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.strokeRect(CLOUD_COORDINATES[0], CLOUD_COORDINATES[1], CLOUD_WIDTH, CLOUD_HEIGHT);
   renderWinTitle(ctx);
   makeYourselfFirst(names);
-  renderGraphic(ctx, names, times);
+  renderGraphicAndText(ctx, names, times);
 };
