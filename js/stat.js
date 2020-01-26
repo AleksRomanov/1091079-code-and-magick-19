@@ -50,8 +50,8 @@ var makeYourselfFirst = function (arr) {
 var renderWinTitle = function (ctx) {
   ctx.fillStyle = '#000';
   ctx.font = 'bold 16px PT Mono';
-  var titles = 'Ура вы победили!\nСписок результатов:';
-  var TitleArrow = titles.split('\n');
+  var Titles = 'Ура вы победили!\nСписок результатов:';
+  var TitleArrow = Titles.split('\n');
 
   TitleArrow.forEach(function (partTitle, i) {
     ctx.fillText(partTitle, CLOUD_COORDINATES[0] + 20, CLOUD_COORDINATES[1] + 30 + (GAP * 2) * i);
