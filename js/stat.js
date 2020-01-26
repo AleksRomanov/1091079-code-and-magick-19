@@ -50,10 +50,10 @@ var makeYourselfFirst = function (arr) {
 var renderWinTitle = function (ctx) {
   ctx.fillStyle = '#000';
   ctx.font = 'bold 16px PT Mono';
-  var Titles = 'Ура вы победили!\nСписок результатов:';
-  var TitleArrow = Titles.split('\n');
+  var title = 'Ура вы победили!\nСписок результатов:';
+  var SplittedTitles = title.split('\n');
 
-  TitleArrow.forEach(function (partTitle, i) {
+  SplittedTitles.forEach(function (partTitle, i) {
     ctx.fillText(partTitle, CLOUD_COORDINATES[0] + 20, CLOUD_COORDINATES[1] + 30 + (GAP * 2) * i);
   });
 };
