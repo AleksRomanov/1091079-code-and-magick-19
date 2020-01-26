@@ -51,9 +51,9 @@ var renderWinTitle = function (ctx) {
   ctx.fillStyle = '#000';
   ctx.font = 'bold 16px PT Mono';
   var title = 'Ура вы победили!\nСписок результатов:';
-  var SplittedTitles = title.split('\n');
+  var splittedTitles = title.split('\n');
 
-  SplittedTitles.forEach(function (partTitle, i) {
+  splittedTitles.forEach(function (partTitle, i) {
     ctx.fillText(partTitle, CLOUD_COORDINATES[0] + 20, CLOUD_COORDINATES[1] + 30 + (GAP * 2) * i);
   });
 };
